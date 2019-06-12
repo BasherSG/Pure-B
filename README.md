@@ -38,12 +38,13 @@
 
 <div id="howTo">
 	<h2>How to use:</h2>
-	<ul>
+	<ol>
+		<li>Clone git: <code>cd ~ && git clone https://github.com/BasherSG/Pure-B .pure</code><li>
 		<li>Loading Pure: Just source the main script &#706;pure.sh&#707; running <code>
-		source &#47;path&#47;to&#47;pure&#47;pure.sh</code> on your script or at the terminal.
+		source &#126;&#47;.pure&#47;pure.sh</code> on your script or at the terminal.
 		</li>
-		<li>Using modules: To use a module just call <a href="#require">require</a> function or pass as an argument the name of the module to your script <code>./myscript.sh --pak=core --base64 --util --log</code> would translate to: load from package core modules base64, util, and log</li>
-	</ul>
+		<li>Using modules: To use a module, call <a href="#require">require</a> function or pass as an argument the name of the module to your script <code>./myscript.sh --pak=core --base64 --util --log</code> would translate to: load from package core modules base64, util, and log</li>
+	</ol>
 </div>
 
 <div id="mainVariables">
