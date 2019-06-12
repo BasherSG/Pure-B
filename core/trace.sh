@@ -12,8 +12,8 @@ trap_add "get_stack ; print_trace" EXIT
 # Get the call stack
 #
 # @usage get_stack
-# @autor codeforester
-# @autor akostadinov
+# @author codeforester
+# @author akostadinov
 # @source https://stackoverflow.com/questions/685435/trace-of-executed-programs-called-by-a-bash-script#answer-18873979
 # @recovered 12/03/2019
 ##PURE_DOC##
