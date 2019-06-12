@@ -39,17 +39,19 @@
 <div id="howTo">
 	<h2>How to use:</h2>
 	<ol>
-		<li>Clone git: <code>cd ~ && git clone https://github.com/BasherSG/Pure-B .pure</code><li>
-		<li>Loading Pure: Just source the main script &#706;pure.sh&#707; running <code>
+		<li>Clone git: <code>cd ~ && git clone https://github.com/BasherSG/Pure-B .pure</code></li>
+		<li>Loading Pure: <code>
 		source &#126;&#47;.pure&#47;pure.sh</code> on your script or at the terminal.
 		</li>
-		<li>Using modules: To use a module, call <a href="#require">require</a> function or pass as an argument the name of the module to your script <code>./myscript.sh --pak=core --base64 --util --log</code> would translate to: load from package core modules base64, util, and log</li>
+		<li>Using modules: <code>require core/mssg</code> or like an argument <code>./myscript.sh --mssg</code> (load from package &#706;core&#707; module &#706;mssg&#707;)</li>
+		<li>Using an entire package: <code>require proto</code> (load package &#706;proto&#707;)</li>
+		<li>Using a function from a module: <code>require core/util ; fake_sleep 10s</code> (Call &#706;fake_sleep&#707; from &#706;util&#707; module)</li>
 	</ol>
 </div>
 
 <div id="mainVariables">
 	<h2>Pure Variables:</h2>
-	<p>Pure defines a few variables when it starts:</p>
+	<p>Pure defines a few useful variables when it starts:</p>
 	<ul>
 		<li>SELF: The name of the current script.</li>
 		<li>SELF_PURE: Pure main script location.</li>
@@ -70,13 +72,13 @@
 		<li id="require"><h4>require:</h4>
 			<p>Syntax: <code>require &#706;package_name&#124;package_name&#47;module_name&#707;</code><p>
 			<p>
-			It's the way to use a module from a package or an entire package if no module is provided. <b>Modules are required only once.</b>
+			It's the way to use a module from a package or an entire package if no module is provided. <b>Modules are obtained only once.</b>
 			</p>
 			<p>
-			Example: <code>require core/dir</code> Use module dir from core
+			Example: <code>require core/dir</code> Use module &#706;dir&#707; from &#706;core&#707;
 			</p>
 			<p>
-			Example: <code>require core</code> Use all core modules
+			Example: <code>require core</code> Use all &#706;core&#707; modules
 			</p>
 		</li>
 		<li id="depend"><h4>depend:</h4>
@@ -118,7 +120,7 @@
 
 <div id="modules">
 	<h2>Modules:</h2>
-	<p>Modules are scripts that can be sourced, each module groups a bunch of useful bash functions. Modules can also serve as <a href="#pureAsArgsParser">long arguments for scripts</a>.</p>
+	<p>Modules are scripts that can be sourced, each module groups functions or runs some kind of code when called. Modules can also serve as <a href="#pureAsArgsParser">long arguments for scripts</a>.</p>
 	<ul>
 		<li><h3>core modules:</h3><ul>
 			<li>base64(Stable): Base 64 string encoding and decoding functions</li>
@@ -162,7 +164,7 @@
 <div id="reservedArgs">
 	<h2>Reserved Arguments:</h2>
 	<p>
-	Pure includes a few reserved arguments:
+	Pure has some reserved arguments:
 	</p>
 	<ul>
 		<li>--debug: Enable bash debugging functionality</li>
@@ -236,10 +238,14 @@
 		<li>Now call your script like this <code>./myscript.sh --long_arg</code> &#706;long_arg&#707; must be the name of a module inside your custom package.</li>
 	</ol>
 	<p>Example:</p>
+	<code>&#126&#36; cat myscript.sh &#706;&#706; EOF</code><br>
 	<code>#!/bin/bash</code><br>
 	<code>declare -xg DEF_PACK="my_pack"</code><br>
-	<code>source &#47;path&#47;to&#47;pure&#47;pure.sh</code><br><br>
-	<code>./myscript.sh --hello</code>
+	<code>source &#126;&#47;.pure&#47;pure.sh</code><br>
+	<code>EOF</code><br>
+	<code&#126&#36; chmod +x myscript.sh</code>
+	<code>&#126&#36; ./myscript.sh --hello</code><br>
+	<code>hello world</code>
 </div>
 
 <div id="references">
