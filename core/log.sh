@@ -30,6 +30,7 @@ log_mssg() {
 ##PURE_HEADER:log_echo
 #log_echo:
 # Enable echo logging 
+# Call once to enable
 #
 # @usage log_echo
 ##PURE_DOC##
