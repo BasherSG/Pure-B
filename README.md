@@ -26,7 +26,7 @@
 <div id="intro">
 	<h2>Intro:</h2>
 	<p>
-	Pure $_ is a Pure Bash Library/Mini Framework, entirely based on bash built-in commands, no other core utils, busybox or external binaries where used, only bash 4+ is required.
+	Pure Bash Library/Mini Framework, entirely based on bash built-in commands, no other core utils, busybox or external binaries where used, only bash 4+ is required.
 	</p>
 	<p>
 	The goal of Pure is to provide an easy way to source a bunch of scripts without the need to know its exact location just like a common programming language such as Java <code>import package</code> or C <code>#include header</code>, the Pure equivalent would be <code>require package/module</code>.
