@@ -40,9 +40,9 @@
 	<h2>How to use:</h2>
 	<ul>
 		<li>Loading Pure: Just source the main script &#706;pure.sh&#707; running <code>
-		source &#47;path&#47;to&#47;pure&#47;pure.sh</code> on the beggining of your script or at the terminal.
+		source &#47;path&#47;to&#47;pure&#47;pure.sh</code> on your script or at the terminal.
 		</li>
-		<li>Using modules: To use a module just use <a href="#require">require</a> function or pass as an argument the name of the module to your script <code>./myscript.sh --pak=core --base64 --util --log</code> would translate to: load from package core modules base64, util, and log</li>
+		<li>Using modules: To use a module just call <a href="#require">require</a> function or pass as an argument the name of the module to your script <code>./myscript.sh --pak=core --base64 --util --log</code> would translate to: load from package core modules base64, util, and log</li>
 	</ul>
 </div>
 
@@ -117,8 +117,7 @@
 
 <div id="modules">
 	<h2>Modules:</h2>
-	<p>Modules are scripts that can be sourced to extend the functionalities of your scripts, each module groups a bunch of useful bash functions. Modules can also serve as long arguments for scripts; so if you need a fast way to parse long arguments you don't need to look further.</p>
-	<p>Dive into each module to learn more about what functionalities each module offers</p>
+	<p>Modules are scripts that can be sourced, each module groups a bunch of useful bash functions. Modules can also serve as <a href="#pureAsArgsParser">long arguments for scripts</a>.</p>
 	<ul>
 		<li><h3>core modules:</h3><ul>
 			<li>base64(Stable): Base 64 string encoding and decoding functions</li>
@@ -151,7 +150,7 @@
 
 <div id="tools">
 	<h2>Tools:</h2>
-	<p>Pure has some additional tools intended to pack, debug or lean about modules</p>
+	<p>Pure has some additional tools intended to pack, debug or to read Pure documentation</p>
 	<ul>
 		<li>debugger(Brocken):  Debugger intended to be like gdb with it's basic functionalities</li>
 		<li>manual(In-Progress): Interactive manual.</li>
@@ -162,7 +161,7 @@
 <div id="reservedArgs">
 	<h2>Reserved Arguments:</h2>
 	<p>
-	Pure include a few reserved arguments:
+	Pure includes a few reserved arguments:
 	</p>
 	<ul>
 		<li>--debug: Enable bash debugging functionality</li>
@@ -196,7 +195,7 @@
 <div id="customPackages">
 	<h2>Custom Packages and Modules:</h2>
 	<p>
-	To define custom packages and modules within it you must follow the <a href="#pakModRules">rules</a> stated above, then you should define the variable <code>declare -x PACK_FOLD=&#34;&#47;path&#47;to&#47;custom&#47;package&#47&#34; </code> <b>before sourcing pure</b>.
+	To define custom packages and modules you must follow the <a href="#pakModRules">rules</a> stated above, then you should define the variable <code>declare -x PACK_FOLD=&#34;&#47;path&#47;to&#47;custom&#47;package&#47&#34; </code> <b>before sourcing pure</b>.
 	</p>
 	<p>
 	If you want to define multiple packages you can delimit their paths with a &#706;:&#707; colon character <code>declare -x PACK_FOLD=&#34;&#47;path&#47;to&#47;custom&#47;package_one&#47;&#58;&#47;path&#47;to&#47;custom&#47;package_two&#47;&#34; </code>
@@ -206,10 +205,10 @@
 <div id="moduleCache">
 	<h2>Module Cache:</h2>
 	<p>
-	Intended to enhance CPU consumption on  subsequent executions, this cache can be stored globally or locally, local cache meant to be used when custom packages are defined outside of the pure.sh folder otherwise the global cache is recommended. 
+	Intended to enhance CPU consumption on subsequent executions, cache can be stored globally or locally, local cache meant to be used when custom packages are defined outside of the &#706;pure.sh&#707; folder otherwise the global cache is recommended. 
 	</p>
 	<p>
-	To define a local cache with a custom name just define the variable <code> declare -x CACHE_FILE=".mycache.cache"</code> <b>before sourcing pure</b>.
+	To set a local cache with a custom name just define the variable <code> declare -x CACHE_FILE=".mycache.cache"</code> <b>before sourcing pure</b>.
 	</p>
 </div>
 
