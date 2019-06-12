@@ -2,8 +2,8 @@
 
 ##PURE_DOC##
 ##PURE_MODULE:log
-# Log module, simple module to easily log into the 
-# default logging file 
+# Mssg module, provides UI functions.
+# Show warnings, information and errors
 ##PURE_DOC##
 
 require "core/color"
