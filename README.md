@@ -243,7 +243,7 @@
 	<code>declare -xg DEF_PACK="my_pack"</code><br>
 	<code>source &#126;&#47;.pure&#47;pure.sh</code><br>
 	<code>EOF</code><br>
-	<code&#126&#36; chmod +x myscript.sh</code><br>
+	<code>&#126&#36; chmod +x myscript.sh</code><br>
 	<code>&#126&#36; ./myscript.sh --hello</code><br>
 	<code>hello world</code>
 </div>
