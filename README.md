@@ -39,7 +39,7 @@
 <div id="howTo">
 	<h2>How to use:</h2>
 	<ol>
-		<li>Clone git: <code>cd ~ && git clone https://github.com/BasherSG/Pure-B .pure</code></li>
+		<li>Clone git: <code>git clone https://github.com/BasherSG/Pure-B ~/.pure</code></li>
 		<li>Loading Pure: <code>
 		source &#126;&#47;.pure&#47;pure.sh</code> on your script or at the terminal.
 		</li>
