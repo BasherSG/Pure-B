@@ -94,7 +94,7 @@ eval_def_args() {
 
 {
     [[ -d "${LWD}/${DEF_PACK}" ]] && pak="${DEF_PACK}" || builtin echo "Module: ${pak}/$_ does not exist"
-    [[ ! "$*" =~ ${DEF_ARGS[cache]} ]] && CACHE_FILE="${CWD}/.${SELFNAME}.cache"
+    [[ "$*" =~ ${DEF_ARGS[cache]} ]] && CACHE_FILE="${CWD}/.${SELFNAME}.cache"
     if [[ -s "${CACHE_FILE}" ]] && [[ ! "$*" =~ ${DEF_ARGS[reload]} ]]; then
         source "${CACHE_FILE}"
     else
