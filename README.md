@@ -238,14 +238,16 @@
 		<li>Now call your script like this <code>./myscript.sh --long_arg</code> &#706;long_arg&#707; must be the name of a module inside your custom package.</li>
 	</ol>
 	<p>Example:</p>
-	<code>&#126&#36; cat myscript.sh &#706;&#706; EOF</code><br>
-	<code>#!/bin/bash</code><br>
-	<code>declare -xg DEF_PACK="my_pack"</code><br>
-	<code>source &#126;&#47;.pure&#47;pure.sh</code><br>
-	<code>EOF</code><br>
-	<code>&#126&#36; chmod +x myscript.sh</code><br>
-	<code>&#126&#36; ./myscript.sh --hello</code><br>
-	<code>hello world</code>
+	<code>
+	~$ cat << EOF > myscript.sh<br>
+	#!/bin/bash<br>
+	declare -xg DEF_PACK="my_pack"<br>
+	source &#126;&#47;.pure&#47;pure.sh<br>
+	EOF<br>
+	~$ chmod +x myscript.sh<br>
+	~$ ./myscript.sh --hello<br>
+	hello world
+	</code>
 </div>
 
 <div id="references">
