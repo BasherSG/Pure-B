@@ -30,6 +30,7 @@ log_mssg() {
 ##PURE_HEADER:log_echo
 #log_echo:
 # Enable echo logging 
+# Call once to enable
 #
 # @usage log_echo
 ##PURE_DOC##
@@ -57,7 +58,8 @@ log_stop() {
 # @usage log <message>
 ##PURE_DOC##
 log() {
-    local tag="$_" fatal=$( [[ "$tag" == "FATAL" ]] && true || false ) status=${2:-100}
-    test -n "$1" && printf '%s - %s %s\n' "$(fake_date [%x-%T])" "$tag:" "$1 - $($fatal && printf "%s" "EXIT STATUS: $status")" >> "$CWD/$LOGFILE"
-    $fatal && exit $status
+    local tag="$_" fatal status=${2:-100}
+    [[ "$tag" == 'FATAL' ]] ; fatal=$?
+    test -n "$1" && printf '%s - %s %s\n' "$(fake_date [%x-%T])" "$tag:" "$1 $( ((fatal==0)) && printf "%s" "- EXIT STATUS: $status" )" >> "$CWD/$LOGFILE"
+    ((fatal==0)) && exit $status
 }

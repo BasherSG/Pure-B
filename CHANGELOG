@@ -1,0 +1,9 @@
+--Version 1.4.1 beta
+    -Added automatic print $return variable on function end
+    -Added '--' long argument end (Some long arguments are still immutable --reload --cache --pak)
+    -Added new function 'extract.quoted' with back pipe and file redirection support
+    -Now pipe_to_array function only works with back pipe
+    -Log module fixed
+    -Bug fixes
+--Version 1.4.0 beta
+    -Initial release

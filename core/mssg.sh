@@ -2,8 +2,8 @@
 
 ##PURE_DOC##
 ##PURE_MODULE:log
-# Log module, simple module to easily log into the 
-# default logging file 
+# Mssg module, provides UI functions.
+# Show warnings, information and errors
 ##PURE_DOC##
 
 require "core/color"
@@ -17,7 +17,7 @@ require "core/color"
 ##PURE_DOC##
 fatal() {
     color 255 0 0
-    \echo "[:FATAL:]" "$1"
+    \echo "[:FATAL:]" "$1" 1>&2
     exit ${2:-100}
 }
 
@@ -30,7 +30,7 @@ fatal() {
 ##PURE_DOC##
 error() (
     regex_color ':ERROR:' 255 0 0
-    \echo "[:ERROR:]" "$1"
+    \echo "[:ERROR:]" "$1" 1>&2
 )
 
 ##PURE_DOC##
@@ -42,7 +42,7 @@ error() (
 ##PURE_DOC##
 warning() (
     regex_color ':WARNING:' 230 230 0
-    \echo "[:WARNING:]" "$1"
+    \echo "[:WARNING:]" "$1" 1>&2
 )
 
 ##PURE_DOC##

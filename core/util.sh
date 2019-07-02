@@ -5,8 +5,8 @@ require "core/dir"
 
 declare -g -A OLD_TRAPS
 declare -g USAGE
-declare -g -A ASSOC
-declare -g -a ARRAY
+declare -gA ASSOC
+declare -ga ARRAY=()
 
 ##PURE_DOC##
 ##PURE_HEADER:fake_cat
@@ -17,8 +17,8 @@ declare -g -a ARRAY
 # @warn: ¡DOESN'T WORK FOR BINARY FILES!
 ##PURE_DOC##
 fake_cat() (
-    [[ -r "${1}" ]] && builtin echo "$(<${1})" && return 0
-    while IFS='' read -r line; do builtin echo "${line}" ; done
+    [[ -r "${1}" ]] && echo "$(<${1})" && return 0
+    while IFS='' read -r line; do echo "${line}" ; done
 )
 
 ##PURE_DOC##
@@ -62,12 +62,12 @@ fake_sleep() {
 #
 # @usage get_chars <file>
 ##PURE_DOC##
-get_chars() (
-    local i=0
+get_chars() {
     file_ok "$1"
-    while read -N1 c; do chars[$i]=${c}; ((i++)); done < "$1"
-    declare -p chars
-)
+    local chars
+    while read -N1 c; do chars+=(${c}); done < "$1"
+    ARRAY=( ${chars[@]} )
+}
 
 ##PURE_DOC##
 ##PURE_HEADER:usage
@@ -105,12 +105,10 @@ clone_var() {
 #pipe_to_array:
 # Pipe line by line to $ARRAY
 #
-# @usage <pipe> | pipe_to_array <<< <pipe>
+# @usage pipe_to_array <<< <pipe>
 ##PURE_DOC##
 pipe_to_array() {
-    while IFS=$'\n' read -r line ; do
-        ARRAY[${#ARRAY[@]}]="$line"
-    done
+    read -r line ; ARRAY+=("$line")
 }
 
 ##PURE_DOC##
@@ -186,16 +184,31 @@ parce_file() {
 #extract:
 # Extract lines between two markers
 # 
-# @usage extract <file> <opening_marker> <closing_marker>
-# @autor Dylan Araps
+# @usage extract <opening_marker> <closing_marker> [< <file>|<<< <pipe>]
+# @author Dylan Araps
+# @author Basher SG
 # @source https://github.com/dylanaraps/pure-bash-bible#extract-lines-between-two-markers
 ##PURE_DOC##
 extract() {
     while IFS=$'\n' read -r line; do
         [[ $extract && $line != "$3" ]] &&
-            printf '%s\n' "$line"
+            pipe_to_array <<< "$line"
 
         [[ $line == "$2" ]] && extract=1
         [[ $line == "$3" ]] && extract=
-    done < "$1"
+    done
+}
+
+##PURE_DOC##
+##PURE_HEADER:extract.quoted
+#extract.quoted:
+# Extract words between two quotes
+# 
+# @usage extract.quoted <delimiter> [< <file>|<<< <pipe>]
+##PURE_DOC##
+extract.quoted() {
+    local flag=0
+    while let flag^=1 ; read -d"$1" -r words; do
+        ((flag==0)) && pipe_to_array <<< "$words"
+    done
 }

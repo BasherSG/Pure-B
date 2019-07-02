@@ -86,15 +86,15 @@ depend() {
 eval_def_args() {
     unset -f eval_def_args
     local i
-    for i in "${!DEF_ARGS_ACT[@]}"; do
-        [[ "$1" =~ $i ]] && eval "${DEF_ARGS_ACT[$i]}"
+    for i in "$@"; do
+        [[ -n "${DEF_ARGS_ACT[$i]}" ]] && eval "${DEF_ARGS_ACT[$i]}"
     done
     return 0
 }
 
 {
     [[ -d "${LWD}/${DEF_PACK}" ]] && pak="${DEF_PACK}" || builtin echo "Module: ${pak}/$_ does not exist"
-    [[ ! "$*" =~ ${DEF_ARGS[cache]} ]] && CACHE_FILE="${CWD}/.${SELFNAME}.cache"
+    [[ "$*" =~ ${DEF_ARGS[cache]} ]] && CACHE_FILE="${CWD}/.${SELFNAME}.cache"
     if [[ -s "${CACHE_FILE}" ]] && [[ ! "$*" =~ ${DEF_ARGS[reload]} ]]; then
         source "${CACHE_FILE}"
     else
@@ -117,5 +117,5 @@ eval_def_args() {
     set +f
     IFS="$OLDIFS"
     unset OLDIFS pattern c pak i
-    eval_def_args "$*"
+    eval_def_args "$@"
 }

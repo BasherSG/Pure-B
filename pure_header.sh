@@ -6,7 +6,7 @@ test ${BASH_VERSINFO[0]} -ge 4 || { echo "Your Bash version is too old, required
 
 declare -rgA SIGTBL=( ['CTRL_WTCH']=SIGTSTP ['DEAM_HUP']=SIGHUP ['TRCE_EXIT']=EXIT )
 
-declare -rg PURE_VERSION='1.4.0'
+declare -rg PURE_VERSION='1.4.1'
 declare -rg PURE_VERSINFO=( ${PURE_VERSION//\./ } 'beta' )
 test -n "$CWD" || declare -g CWD="$( cd -P "$([[ -d "${0%/*}" ]] && echo "${0%/*}" || pwd)" && pwd )"
 
@@ -23,12 +23,17 @@ declare +x -g LOADED
 declare +x -gi MDL_COUNTER=0
 declare -rg MODULE_TAG="#MODULE"
 declare +x -g MDL_ALIASES=${MDL_ALIASES:-false}
+declare -g RETURN
 declare +x -ga ARGS=()
 declare +x -gA MAGIC_ARGS=( )
-declare -rgA DEF_ARGS=( ['cache']='--cache' ['debug']='--debug' ['mdl_alias']='--mdl_alias' ['pak']='--pak' ['reload']='--reload' )
-declare -rgA DEF_ARGS_ACT=( 
-    ['mdl_alias']='MDL_ALIASES=true'
-    ['debug']='set -x'
+declare -rgA DEF_ARGS=( ['cache']='--cache' ['debug']='--debug' ['mdl_alias']='--mdl_alias' ['pak']='--pak' ['reload']='--reload' ['args_end']='--' )
+declare -rgA DEF_ARGS_ACT=(
+    [${DEF_ARGS[args_end]}]='break'
+    [${DEF_ARGS[mdl_alias]}]='MDL_ALIASES=true'
+    [${DEF_ARGS[debug]}]='set -x'
 )
+
+set -o functrace &> >(:)
+trap '(("${#return[@]}">0)) && printf "${ret_format:-%s}" "${return[@]}" && unset return' RETURN
 
 shopt -s expand_aliases

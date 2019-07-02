@@ -67,7 +67,7 @@ alias sa="set_action "
 ##PURE_DOC##
 push_action() {
     local IFS=' '
-    ACTIONS[${#ACTIONS[@]}+1]="${*}"
+    ACTIONS+=("${*}")
 }
 alias pa="push_action "
 

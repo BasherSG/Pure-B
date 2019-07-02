@@ -22,12 +22,11 @@ echo() (
     if [[ -z "${REGEX[*]}" ]]; then
         builtin echo $_ -e "${COLOR[MAIN]}$*${NC}"
     else
-        local buff="$*" RGX
+        local buff="$*" RGX last
         for RGX in "${!REGEX[@]}"; do 
-            [[ "$buff" =~ ${REGEX[$RGX]} ]]
-            buff="${buff//${BASH_REMATCH[0]}/${COLOR[$RGX]}${BASH_REMATCH[0]}${NC}}"
+            [[ "$buff" =~ $RGX ]] && buff="${buff//${BASH_REMATCH[0]}/${COLOR[$RGX]}${BASH_REMATCH[0]}${NC}}"
         done
-        builtin echo $_ -e "$buff"
+        builtin echo $_ -e "$buff${NC}"
     fi
 )
 
@@ -38,7 +37,7 @@ echo() (
 # 
 # @usage hex_to_rgb <six_digit_hex_color>
 # @source https://github.com/dylanaraps/pure-bash-bible#convert-a-hex-color-to-rgb
-# @autor Dylan Araps
+# @author Dylan Araps
 ##PURE_DOC##
 hex_to_rgb() (
     #        hex_to_rgb "000000"
@@ -55,7 +54,7 @@ hex_to_rgb() (
 # 
 # @usage rgb_to_hex <red_ascii_color> <green_ascii_color> <blue_ascii_color>
 # @source https://github.com/dylanaraps/pure-bash-bible#convert-an-rgb-color-to-hex
-# @autor Dylan Araps
+# @author Dylan Araps
 ##PURE_DOC##
 rgb_to_hex() (
     printf '#%02x%02x%02x\n' "$1" "$2" "$3"
@@ -68,7 +67,7 @@ rgb_to_hex() (
 # 
 # @usage is_hex_color <six_digit_hex_color>
 # @source https://github.com/dylanaraps/pure-bash-bible#use-regex-on-a-string
-# @autor Dylan Araps
+# @author Dylan Araps
 ##PURE_DOC##
 is_hex_color() (
     if [[ $1 =~ ^(#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3}))$ ]]; then
@@ -110,7 +109,6 @@ color() {
 # Apply specified color to the specified regex pattern to subsequent echo calls
 # 
 # @usage regex_color <regex> <six_digit_hex_color|red_ascii_color> <green_ascii_color> <blue_ascii_color>
-# @warn Currently there is only one replacement per echo supported
 ##PURE_DOC##
 regex_color() {
     local IFS=' ' label="$1"
