@@ -1,6 +1,6 @@
 <h1>Pure B</h1>
 
-<h3>Current Version: 1.4.1 beta</h3>
+<h3>Current Version: 1.4.2 beta</h3>
 
 <div id="contents">
 	<h2>Contents:</h2>

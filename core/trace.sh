@@ -16,7 +16,7 @@ trap_add "get_stack ; print_trace" EXIT
 # @author akostadinov
 # @source https://stackoverflow.com/questions/685435/trace-of-executed-programs-called-by-a-bash-script#answer-18873979
 # @recovered 12/03/2019
-##PURE_DOC##
+##PURE_DOC_END##
 get_stack() {
    STACK=""
    # to avoid noise we start with 1 to skip get_stack caller
@@ -39,7 +39,7 @@ get_stack() {
 # Call trace
 #
 # @usage print_trace
-##PURE_DOC##
+##PURE_DOC_END##
 print_trace() (
     local IFS=\|
     printf "%s\n" "TRACE:"

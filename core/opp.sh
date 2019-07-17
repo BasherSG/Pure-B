@@ -4,7 +4,7 @@
 ##PURE_MODULE:opp
 # Opp module; Aritmetical, logical, conversion 
 # functions
-##PURE_DOC##
+##PURE_DOC_END##
 
 require "core/mssg"
 
@@ -56,10 +56,11 @@ declare -g -i IS_NUM_CAP=0
 # of the offending arg
 # 
 # @usage is_num <number1> <number2> ... <numberN>
-##PURE_DOC##
+##PURE_DOC_END##
 is_num() (
     trap "IS_NUM_CAP=0" RETURN
-    local TMP=(${@}) i
+    [[ -z "${*}" ]] && return 1
+    local TMP=( ${@} ) i
     for ((i=0 ; i<${#TMP[@]} ; i++)) ; do
         [[ ${TMP[$i]} =~ ^-?[0-9]+([.][0-9]+)?$ ]] || return $((++i))
         (( IS_NUM_CAP > 0 )) && ((${TMP[$i]} > IS_NUM_CAP )) && return $((++i))
@@ -74,9 +75,9 @@ is_num() (
 # if negative
 # 
 # @usage get_sign <number>
-##PURE_DOC##
+##PURE_DOC_END##
 get_sign() (
-    is_number $1 || return 2
+    is_num $1 || return 2
     [[ $1 -gt 0 ]] && return 0 || return 1
 )
 
@@ -86,9 +87,20 @@ get_sign() (
 # Convert given character to decimal ascii value
 # 
 # @usage ord <character>
-##PURE_DOC##
+##PURE_DOC_END##
 ord() (
     printf '%d' "'$1"
+)
+
+##PURE_DOC##
+##PURE_HEADER:ucod
+#ucod:
+# Print the corresponding unicode format for the given character
+# 
+# @usage ucod <character>
+##PURE_DOC_END##
+ucod() (
+    printf '\\u%04x' "'$1"
 )
 
 ##PURE_DOC##
@@ -97,7 +109,7 @@ ord() (
 # Convert given decimal ascii number to character
 # 
 # @usage chr <ascii_decimal>
-##PURE_DOC##
+##PURE_DOC_END##
 chr() (
 	[[ "$1" -gt 0 ]] && [[ "$1" -lt 256 ]] || return 1
 	printf "\x$(printf %x "$1")"
@@ -109,7 +121,7 @@ chr() (
 # Convert given hexadecimal ascii number to character
 # 
 # @usage hchr <ascii_hexadecimal>
-##PURE_DOC##
+##PURE_DOC_END##
 hchr() (
 	[[ "$(printf '%d' "0x$1")" -lt 256 ]] || return 1
 	printf "\x$(printf %x 0x$1)"
@@ -121,7 +133,7 @@ hchr() (
 # Convert given character to hexadecimal ascii value
 # 
 # @usage hex <character>
-##PURE_DOC##
+##PURE_DOC_END##
 hex() (
 	printf '%02x' "'$1"
 )
@@ -132,7 +144,7 @@ hex() (
 # Convert given hexadecimal value to decimal
 # 
 # @usage hdec <hexadecimal_value>
-##PURE_DOC##
+##PURE_DOC_END##
 hdec() (
 	printf '%d' "0x$1"
 )
@@ -143,7 +155,7 @@ hdec() (
 # Convert given decimal value to hexadecimal
 # 
 # @usage dhex <decimal_value>
-##PURE_DOC##
+##PURE_DOC_END##
 dhex() (
 	printf '%02x' "$1"
 )
@@ -154,7 +166,7 @@ dhex() (
 # Perform the and operation between the two given args
 # 
 # @usage and <args1> <args2>
-##PURE_DOC##
+##PURE_DOC_END##
 and() (
     printf '%s' $(($1 & $2))
 )
@@ -165,7 +177,7 @@ and() (
 # Perform the or operation between the two given args
 # 
 # @usage or <args1> <args2>
-##PURE_DOC##
+##PURE_DOC_END##
 or() (
     printf '%s' $(($1 | $2))
 )
@@ -176,7 +188,7 @@ or() (
 # Perform the xor operation between the two given args
 # 
 # @usage xor <args1> <args2>
-##PURE_DOC##
+##PURE_DOC_END##
 xor() (
     printf '%s' $(($1 ^ $2))
 )
@@ -187,7 +199,7 @@ xor() (
 # Perform the bit shift left operation between the two given args
 # 
 # @usage bshift_l <args1> <args2>
-##PURE_DOC##
+##PURE_DOC_END##
 bshift_l() (
     printf '%s' $(($1 << $2))
 )
@@ -198,7 +210,7 @@ bshift_l() (
 # Perform the bit shift right operation between the two given args
 # 
 # @usage bshift_r <args1> <args2>
-##PURE_DOC##
+##PURE_DOC_END##
 bshift_r() (
     printf '%s' $(($1 >> $2))
 )
@@ -209,9 +221,9 @@ bshift_r() (
 # Perform the finite field multiplication operation between the two given args
 # 
 # @usage finite_field_mult <args1> <args2>
-##PURE_DOC##
+##PURE_DOC_END##
 finite_field_mult() (
-    local aa=$1 bb=$2 r=0 t
+    local aa=$1 bb=$2 r=0
     while ((aa && bb)); do
         (($bb & 1)) && r=$(($r ^ $aa))
         (($aa & 0x80)) && aa=$((($aa << 1 ) ^ 0x11b)) || aa=$(($aa << 1))
@@ -226,7 +238,7 @@ finite_field_mult() (
 # Generate the ATABLE and the LOG_TBL for the given galois generator seed
 # 
 # @usage finite_field_gen <seed>
-##PURE_DOC##
+##PURE_DOC_END##
 finite_field_gen() {
     local c a=1 d g=$1 i
     [[ -n ${GALOIS_GEN[*]} ]] || return 1

@@ -15,7 +15,7 @@ declare -ga ARRAY=()
 #
 # @usage <pipe> | fake_cat <file> <<< <pipe>
 # @warn: ¡DOESN'T WORK FOR BINARY FILES!
-##PURE_DOC##
+##PURE_DOC_END##
 fake_cat() (
     [[ -r "${1}" ]] && echo "$(<${1})" && return 0
     while IFS='' read -r line; do echo "${line}" ; done
@@ -27,7 +27,7 @@ fake_cat() (
 # Print current date with custom date format
 #
 # @usage fake_date <date_format>
-##PURE_DOC##
+##PURE_DOC_END##
 fake_date() (
     local IFS=' '
     printf "%($*)T\\n" "-1"
@@ -39,7 +39,7 @@ fake_date() (
 # Sleep for the given amount of seconds, minutes, hours or days
 #
 #@usage fake_sleep <time><s|m|h|d>
-##PURE_DOC##
+##PURE_DOC_END##
 fake_sleep() {
         local c=${1//[A-Za-z]/''} s=${1:${#1}-1:1} i
         case $s in
@@ -61,7 +61,7 @@ fake_sleep() {
 # Print chars of the given file
 #
 # @usage get_chars <file>
-##PURE_DOC##
+##PURE_DOC_END##
 get_chars() {
     file_ok "$1"
     local chars
@@ -75,7 +75,7 @@ get_chars() {
 # Print $USAGE variable content when defined
 #
 # @usage usage
-##PURE_DOC##
+##PURE_DOC_END##
 usage() (
     fake_cat << EOF
 $USAGE
@@ -90,7 +90,7 @@ exit 0
 # Variable to be cloned must be accesible.
 #
 # @usage clone_var <variable_name_to_clone> <new_variable>
-##PURE_DOC##
+##PURE_DOC_END##
 clone_var() {
     local IFS=\|
     test $# -eq 2 || { error "2 Variable names required <from> <to>" ; return ${ERRTBL[BAD_ARG]}; }
@@ -106,7 +106,7 @@ clone_var() {
 # Pipe line by line to $ARRAY
 #
 # @usage pipe_to_array <<< <pipe>
-##PURE_DOC##
+##PURE_DOC_END##
 pipe_to_array() {
     read -r line ; ARRAY+=("$line")
 }
@@ -117,7 +117,7 @@ pipe_to_array() {
 # Format output into columns
 #
 # @usage columns <string> <columns_amount> <separator>
-##PURE_DOC##
+##PURE_DOC_END##
 columns() (
     [[ "${#@}" -le 3 ]] && [[ "${#@}" -gt 1 ]] || return 1
     local JUMP=$2 k=1 TABS m=8 j=2 ilen=0
@@ -145,7 +145,7 @@ columns() (
 # @autor Richard Hansen
 # @source https://stackoverflow.com/questions/3338030/multiple-bash-traps-for-the-same-signal#answer-7287873
 # @recovered 22/02/2019
-##PURE_DOC##
+##PURE_DOC_END##
 trap_add() {
     trap_add_cmd=$1; shift || fatal "${FUNCNAME} usage error" ${ERRTBL[BAD_USAGE]}
     for trap_add_name in "$@"; do
@@ -170,13 +170,13 @@ declare -f -t trap_add
 # using the given separator 
 #
 # @usage parce_file <separator> <file>
-##PURE_DOC##
+##PURE_DOC_END##
 parce_file() {
     file_ok "${2}" || return $?
     local sep=${1:-\|} file="${2}"
     while IFS="${sep}" read -r -a array; do
-        ASSOC["${array[0]}"]=${array[1]};
-    done < "$file";
+        ASSOC["${array[0]}"]=${array[1]}
+    done < "$file"
 }
 
 ##PURE_DOC##
@@ -188,14 +188,13 @@ parce_file() {
 # @author Dylan Araps
 # @author Basher SG
 # @source https://github.com/dylanaraps/pure-bash-bible#extract-lines-between-two-markers
-##PURE_DOC##
+##PURE_DOC_END##
 extract() {
     while IFS=$'\n' read -r line; do
-        [[ $extract && $line != "$3" ]] &&
-            pipe_to_array <<< "$line"
+        [[ $extract && $line != "$2" ]] && pipe_to_array <<< "$line"
 
-        [[ $line == "$2" ]] && extract=1
-        [[ $line == "$3" ]] && extract=
+        [[ $line == "$1" ]] && extract=1
+        [[ $line == "$2" ]] && extract=
     done
 }
 
@@ -205,7 +204,7 @@ extract() {
 # Extract words between two quotes
 # 
 # @usage extract.quoted <delimiter> [< <file>|<<< <pipe>]
-##PURE_DOC##
+##PURE_DOC_END##
 extract.quoted() {
     local flag=0
     while let flag^=1 ; read -d"$1" -r words; do

@@ -4,7 +4,7 @@
 ##PURE_MODULE:base64
 # Base64 module, turn text into base64 formated strings
 # and backward
-##PURE_DOC##
+##PURE_DOC_END##
 
 require "core/opp"
 
@@ -16,7 +16,7 @@ declare -g -r b64=( {A..Z} {a..z} {0..9} {+,/} )
 # Decode a base64 string into plain text
 # 
 # @usage b64_decode <base64_string>
-##PURE_DOC##
+##PURE_DOC_END##
 b64_decode() (
     decodeblock() {
         local in=( $* ) out index i
@@ -56,7 +56,7 @@ b64_decode() (
 # Encode plain text into base64 string
 # 
 # @usage b64_encode <plain_text>
-##PURE_DOC##
+##PURE_DOC_END##
 b64_encode() (
     encodeblock() {
         local len=$1 && shift

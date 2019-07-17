@@ -4,7 +4,7 @@
 ##PURE_MODULE:proc
 # Proc module, miscelaneous utilities to find, kill, 
 # and gather info about process
-##PURE_DOC##
+##PURE_DOC_END##
 
 require "core/mssg"
 require "core/util"
@@ -18,7 +18,7 @@ declare -rig MAXPID="$(fake_cat /proc/sys/kernel/pid_max)"
 # Get all the pids being used by process
 # 
 # @usage get_proc_pids
-##PURE_DOC##
+##PURE_DOC_END##
 get_proc_pids() (
     cd "/proc" || return 1
     : "$(printf '%s ' *)"
@@ -33,7 +33,7 @@ get_proc_pids() (
 # Get all the pids that the system can assign
 # 
 # @usage get_all_pids
-##PURE_DOC##
+##PURE_DOC_END##
 get_all_pids() (
     eval "printf '%s ' {1..$MAXPID}"
 )
@@ -44,7 +44,7 @@ get_all_pids() (
 # Get the simple name of the process
 # 
 # @usage get_name <pid>
-##PURE_DOC##
+##PURE_DOC_END##
 proc_name() (
     local IFS=' '
     [[ -f "/proc/$1/comm" ]] && fake_cat "/proc/$1/comm"
@@ -56,7 +56,7 @@ proc_name() (
 # Get the main status of the given PID
 # 
 # @usage get_status <pid>
-##PURE_DOC##
+##PURE_DOC_END##
 proc_status() (
     local stat IFS=' '
     [[ -f "/proc/$1/stat" ]] && read -r -a stat < "/proc/$1/stat" && printf "%s" "${stat[-50]}"
@@ -68,7 +68,7 @@ proc_status() (
 # Find out whether the given PID is a hidden process, if it is could be a thread
 # 
 # @usage is_hidden <pid>
-##PURE_DOC##
+##PURE_DOC_END##
 is_hidden() {
     local IFS=' '
     cd "/proc/$1" &> <(:) || return 1
@@ -85,7 +85,7 @@ is_hidden() {
 # Find out whether the given PID is a thread or a regular process
 # 
 # @usage is_thread <pid>
-##PURE_DOC##
+##PURE_DOC_END##
 is_thread() (
     local IFS=' '
     parce_file ':' "/proc/$1/status" || return "${ERRTBL[BAD_FILE]}"
@@ -100,7 +100,7 @@ is_thread() (
 #   -s Show only the first PID found 
 # 
 # @usage pidof <process_name>
-##PURE_DOC##
+##PURE_DOC_END##
 pidof() (
     local name i IFS=' '
     [[ -n "$*" ]] || { error 'Please supply a process name' ; return 1; }
@@ -117,7 +117,7 @@ pidof() (
 # Show the amount of instances for each process name
 # 
 # @usage proc_count
-##PURE_DOC##
+##PURE_DOC_END##
 proc_count() (
 	local index IFS=$'\n' i
 	declare -gA count
@@ -142,7 +142,7 @@ proc_count() (
 #   Note: To view all the available singals run `kill -l`
 # 
 # @usage killall <process_name>
-##PURE_DOC##
+##PURE_DOC_END##
 killall() (
     local signal proc
     [[ -n "$2" ]] && [[ "$1" =~ ^- ]] && { signal="${1^^}" ; proc=$(pidof "$2"); } || proc=$(pidof "$1")

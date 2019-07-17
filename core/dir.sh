@@ -4,7 +4,7 @@
 ##PURE_MODULE:dir
 # Dir module, provides useful functions to test list,
 # and find files
-##PURE_DOC##
+##PURE_DOC_END##
 
 require "core/opp"
 require "core/mssg"
@@ -15,7 +15,7 @@ require "core/mssg"
 # Tests whether file or folder exists
 # 
 # @usage exists <file|folder>
-##PURE_DOC##
+##PURE_DOC_END##
 exists() (
     [[ ! -e "${1}" ]] && error "No such file or folder '${1}'" && return ${ERRTBL[NOT_EXIST]}
     return 0
@@ -27,7 +27,7 @@ exists() (
 # Tests whether file of folder can be read
 # 
 # @usage can_read <file|folder>
-##PURE_DOC##
+##PURE_DOC_END##
 can_read() (
     [[ ! -r "${1}" ]] && error "Can't read file or folder '${1}'" && return ${ERRTBL[CANT_READ]}
     return 0
@@ -39,7 +39,7 @@ can_read() (
 # Tests whether file is empty
 # 
 # @usage file_empty <file>
-##PURE_DOC##
+##PURE_DOC_END##
 file_empty() (
     [[ ! -s "${1}" ]] && error "File is empty '${1}'" && return ${ERRTBL[BAD_FILE]}
     return 0
@@ -51,7 +51,7 @@ file_empty() (
 # Tests whether file exists, can be read and is a regular file
 # 
 # @usage file_ok <file>
-##PURE_DOC##
+##PURE_DOC_END##
 file_ok() (
     exists "${1}" || return $?
     can_read "${1}" || return $?
@@ -65,7 +65,7 @@ file_ok() (
 # Tests whether folder exists, can be read and is a directory
 # 
 # @usage folder_ok <folder>
-##PURE_DOC##
+##PURE_DOC_END##
 folder_ok() (
     exists "${1}" || return $?
     can_read "${1}" || return $?
@@ -79,7 +79,7 @@ folder_ok() (
 # Get the real path of a folder
 # 
 # @usage real_dir <folder>
-##PURE_DOC##
+##PURE_DOC_END##
 real_dir() (
     [[ -d "${1}" ]] && cd -P "${1}" && builtin echo "${PWD}" || return 1
 )
@@ -90,7 +90,7 @@ real_dir() (
 # Get the basename of the given path
 # 
 # @usage basename <path>
-##PURE_DOC##
+##PURE_DOC_END##
 basename() (
     sep="${2:-/}"
     builtin echo "${1##*"$sep"}"
@@ -102,7 +102,7 @@ basename() (
 # Get the dirname of the given path
 # 
 # @usage dirname <path>
-##PURE_DOC##
+##PURE_DOC_END##
 dirname() (
     local WIN_SPRTOR='\'
     local LNX_SPRTOR='/'
@@ -118,7 +118,7 @@ dirname() (
 # List folder contents
 # 
 # @usage dir <folder>
-##PURE_DOC##
+##PURE_DOC_END##
 dir() (
     folder_ok "${1:-.}" || return $?
     local dir="$(real_dir "${1}")" IFS=' '
@@ -132,7 +132,7 @@ dir() (
 # Find the given name or regex using
 # 
 # @usage find <starting_folder> <depth> <regex_pettern|file_name|folder_name>
-##PURE_DOC##
+##PURE_DOC_END##
 find() (
     local work_path='.' depth=1 pattern='*' a='' matches=() i j
     test -d "$1" && work_path="$1" && shift 1

@@ -13,12 +13,12 @@
 # default control file actons 0='none' 1='graceful 
 # exit' 2='restart script'
 # 
-##PURE_DOC##
+##PURE_DOC_END##
 
 require "core/opp"
 
-declare -a -g ACTIONS=( [1]='exit 0' [2]='restart' )
-declare -g CTRL_FILE="${SELFNAME}.ctl"
+declare -ag ACTIONS=( [1]='exit 0' [2]='restart' )
+declare -g CTRL_FILE="${CTRL_FILE:-"${SELFNAME}.ctl"}"
 declare -gi WATHCER=0
 
 ##PURE_DOC##
@@ -27,7 +27,7 @@ declare -gi WATHCER=0
 # Reset the control file back to 0
 # 
 # @usage reset_ctrl
-##PURE_DOC##
+##PURE_DOC_END##
 reset_ctrl() (
     builtin echo 0 > "${CWD}/${CTRL_FILE}"
 )
@@ -38,7 +38,7 @@ reset_ctrl() (
 # Write number into the control file CTRL_FILE
 # 
 # @usage write_ctrl <number>
-##PURE_DOC##
+##PURE_DOC_END##
 write_ctrl() (
     is_num ${1} || return $?
     builtin echo ${1} > "${CWD}/${CTRL_FILE}"
@@ -51,7 +51,7 @@ write_ctrl() (
 # default actions can be overwriten
 # 
 # @usage set_action <number> <action|function_call|command>
-##PURE_DOC##
+##PURE_DOC_END##
 set_action() {
     is_num ${1} && (($1 > 0)) && shift 1 || return $?
     ACTIONS[${_}]="${*}"
@@ -64,7 +64,7 @@ alias sa="set_action "
 # Push the specified action into the ACTIONS array
 # 
 # @usage push_action <action|function_call|command> <command_arguments>
-##PURE_DOC##
+##PURE_DOC_END##
 push_action() {
     local IFS=' '
     ACTIONS+=("${*}")
@@ -77,8 +77,9 @@ alias pa="push_action "
 # Restart the current script instance
 # 
 # @usage restart
-##PURE_DOC##
+##PURE_DOC_END##
 restart() {
+    IFS=' '
     ( "${CWD}/${SELF}" $* ) & disown $!
     exit 0
 }
@@ -89,9 +90,9 @@ restart() {
 # Read the control file and execute action
 # 
 # @usage ctrl
-##PURE_DOC##
+##PURE_DOC_END##
 ctrl() {
-    local ctrl=0
+    local IFS=' ' ctrl=0
     read -r -n1 ctrl < "${CWD}/${CTRL_FILE}"
     is_num "${ctrl}" || { reset_ctrl && return 1; }
     [[ ${ctrl} -eq 0 ]] && return 0
@@ -127,7 +128,7 @@ watch() {
     "
     bash <(builtin echo "$watcher") & WATCHER=$!
     trap "ctrl" "${SIGTBL[CTRL_WTCH]}"
-    unset watch
+    unset -f watch
 }
 
 reset_ctrl

@@ -18,7 +18,7 @@
 # 
 # @autor: Sergio Gutiérrez
 # @since: 15/03/2019
-##PURE_DOC##
+##PURE_DOC_END##
 
 require "core/util"
 require "core/opp"
@@ -43,7 +43,7 @@ listen_trap() {
 # Function to start listening for incoming messages
 # 
 # @usage languaje
-##PURE_DOC##
+##PURE_DOC_END##
 languaje() {
     listen_trap false
 
@@ -104,7 +104,7 @@ speak() {
 #         or type the message by hand.
 # 
 # @usage send
-##PURE_DOC##
+##PURE_DOC_END##
 send() {
     if [[ -n "$PEER" ]]; then
         speak 63

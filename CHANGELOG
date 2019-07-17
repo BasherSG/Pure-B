@@ -1,3 +1,14 @@
+--Version 1.4.2 beta
+    -Module tty method get_all_tty performance enhancement
+    -New tty module methods:
+        -broadcast_tty
+        -broadcast_pts
+        -send_to_tty
+        -send_to_pts
+    -Expanded error table with standard bash errors
+    -Logging module fixes
+    -Long arguments fixes
+    -Bug fixes
 --Version 1.4.1 beta
     -Added automatic print $return variable on function end
     -Added '--' long argument end (Some long arguments are still immutable --reload --cache --pak)

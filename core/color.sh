@@ -38,7 +38,7 @@ echo() (
 # @usage hex_to_rgb <six_digit_hex_color>
 # @source https://github.com/dylanaraps/pure-bash-bible#convert-a-hex-color-to-rgb
 # @author Dylan Araps
-##PURE_DOC##
+##PURE_DOC_END##
 hex_to_rgb() (
     #        hex_to_rgb "000000"
     : "${1/\#}"
@@ -55,7 +55,7 @@ hex_to_rgb() (
 # @usage rgb_to_hex <red_ascii_color> <green_ascii_color> <blue_ascii_color>
 # @source https://github.com/dylanaraps/pure-bash-bible#convert-an-rgb-color-to-hex
 # @author Dylan Araps
-##PURE_DOC##
+##PURE_DOC_END##
 rgb_to_hex() (
     printf '#%02x%02x%02x\n' "$1" "$2" "$3"
 )
@@ -68,12 +68,13 @@ rgb_to_hex() (
 # @usage is_hex_color <six_digit_hex_color>
 # @source https://github.com/dylanaraps/pure-bash-bible#use-regex-on-a-string
 # @author Dylan Araps
-##PURE_DOC##
+# @author Basher SG
+##PURE_DOC_END##
 is_hex_color() (
     if [[ $1 =~ ^(#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3}))$ ]]; then
         return 0
     else
-        error "error: $1 is an invalid color."
+        error "$1 is an invalid color."
         return 1
     fi
 )
@@ -84,7 +85,7 @@ is_hex_color() (
 # Apply specified color to the subsequent echo calls
 # 
 # @usage color <six_digit_hex_color|red_ascii_color> <green_ascii_color> <blue_ascii_color> <label>
-##PURE_DOC##
+##PURE_DOC_END##
 color() {
     local label
     (($# >= 1)) || return "${ERRTBL[BAD_COLOR]}"
@@ -109,7 +110,7 @@ color() {
 # Apply specified color to the specified regex pattern to subsequent echo calls
 # 
 # @usage regex_color <regex> <six_digit_hex_color|red_ascii_color> <green_ascii_color> <blue_ascii_color>
-##PURE_DOC##
+##PURE_DOC_END##
 regex_color() {
     local IFS=' ' label="$1"
     (($# >= 2)) || return "${ERRTBL[BAD_ARG]}"

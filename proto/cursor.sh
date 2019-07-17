@@ -8,7 +8,7 @@
 # 
 # @autor: Sergio Gutiérrez
 # @since: 15/03/2019
-##PURE_DOC##
+##PURE_DOC_END##
 
 declare -g KEY_UP='\e[A'
 declare -g KEY_DOWN='\e[B'

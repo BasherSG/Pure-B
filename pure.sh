@@ -63,7 +63,7 @@ map_modules() {
             fi
             test -z "$namespace" && : "${i##*/}" && namespace="${pack}/${_%.*}" 
             label="${namespace##*/}"
-            if [[ $label =~ [a-z_]+$ ]]; then
+            if [[ $label =~ [a-z_0-9]+$ ]]; then
                 test -n "$namespace" || exit "${ERRTBL[MDL_FATAL]}"
                 MODULES["${namespace}"]="$i"
                 MAGIC_ARGS["${label}"]="--${label}"
@@ -93,7 +93,6 @@ eval_def_args() {
 }
 
 {
-    [[ -d "${LWD}/${DEF_PACK}" ]] && pak="${DEF_PACK}" || builtin echo "Module: ${pak}/$_ does not exist"
     [[ "$*" =~ ${DEF_ARGS[cache]} ]] && CACHE_FILE="${CWD}/.${SELFNAME}.cache"
     if [[ -s "${CACHE_FILE}" ]] && [[ ! "$*" =~ ${DEF_ARGS[reload]} ]]; then
         source "${CACHE_FILE}"
@@ -105,12 +104,14 @@ eval_def_args() {
     IFS=\| c=1
     def_pattern="${DEF_ARGS[*]}"
     pattern="${MAGIC_ARGS[*]}"
+    [[ -d "${LWD}/${DEF_PACK}" ]] && pak="${DEF_PACK}"
     set -f
     for i in "$@"; do
+        [[ "$i" =~ ${DEF_ARGS[args_end]} ]] && break
         : "${i//-/}"
         [[ "$i" =~ ${DEF_ARGS[pak]}\=[a-z_/]+$ ]] && eval "$_"
         [[ ! $i =~ ${def_pattern}|${pattern} ]] && ARGS[$c]="$i" && ((c++))
-        if [[ -n "$_" ]] && [[ ! $i =~ $def_pattern ]]; then
+        if [[ -n "$pak" ]] && [[ ! $i =~ $def_pattern ]] && [[ "$i" =~ ^-- ]]; then
             require "${pak}/$_"
         fi
     done

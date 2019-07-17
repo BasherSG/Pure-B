@@ -11,7 +11,7 @@
 # 	-Param:      Variable name to be evaluated by the case
 # 
 # @usage magicase <Separator1> <Option1Separator1OptionN> <Separator2> <Action1Separato2ActionN> <Param>
-##PURE_DOC##
+##PURE_DOC_END##
 function magicase() {
     [[ ${#@} -eq 5 ]] || return 1
     local opts works param="$5"
@@ -38,7 +38,7 @@ function magicase() {
 # 	-Param:      Variable name to be evaluated by the case
 # 
 # @usage magicopts <Separator1> <Option1Separator1OptionN> <Separator2> <Action1Separato2ActionN> <Param>
-##PURE_DOC##
+##PURE_DOC_END##
 function magicopts() {
     [[ ${#@} -eq 5 ]] || return 1
     local delim1="$1" delim2="$3"
