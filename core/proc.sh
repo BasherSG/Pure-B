@@ -10,7 +10,7 @@ require "core/mssg"
 require "core/util"
 require "core/opp"
 
-declare -rig MAXPID="$(fake_cat /proc/sys/kernel/pid_max)"
+declare -rig MAXPID="$(</proc/sys/kernel/pid_max)"
 
 ##PURE_DOC##
 ##PURE_HEADER:get_proc_pids
