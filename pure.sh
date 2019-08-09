@@ -10,7 +10,7 @@ declare -rg SELF_PURE="${LWD}/${BASH_SOURCE[0]##*/}"
 source "${LWD}/pure_header.sh" || exit 255
 
 version_control() {
-    local cur_version=$(<"${VERSION_FILE}")
+    [[ -f "${VERSION_FILE}" ]] && local cur_version=$(<"${VERSION_FILE}")
     local cur_versinfo=( ${cur_version//\./ } )
     declare -g new_version=false
 
