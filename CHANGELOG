@@ -1,3 +1,13 @@
+--Version 1.4.3 beta
+    -Auto refresh modules and packages cache on new version
+    -Enforce module correct module names fix
+    -New string module
+    -New opp module methods:
+        -min find min value in integer arguments
+        -max find max value in integer arguments
+    -Edit ctrl module method:
+        -watch method renamed to watch_me
+    -Color module bug fix
 --Version 1.4.2 beta
     -Module tty method get_all_tty performance enhancement
     -New tty module methods:

@@ -3,7 +3,7 @@
 ##PURE_DOC##
 ##PURE_MODULE:base64
 # Base64 module, turn text into base64 formated strings
-# and backward
+# and back
 ##PURE_DOC_END##
 
 require "core/opp"

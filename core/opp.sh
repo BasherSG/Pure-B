@@ -69,6 +69,38 @@ is_num() (
 )
 
 ##PURE_DOC##
+##PURE_HEADER:min
+#min:
+# Find the minimum number
+# 
+# @usage min <number1> <number2> ... <numberN>
+##PURE_DOC_END##
+min() (
+    : $1
+    for i in "${@}"; do
+        [[ ${i} =~ ^-?[0-9]+$ ]] || return 1
+        ((i<_)) && : $i || : $_
+    done
+    printf '%s' $_
+)
+
+##PURE_DOC##
+##PURE_HEADER:max
+#max:
+# Find the maximum number
+# 
+# @usage max <number1> <number2> ... <numberN>
+##PURE_DOC_END##
+max() (
+    : $1
+    for i in "${@}"; do
+        [[ ${i} =~ ^-?[0-9]+$ ]] || return 1
+        let i>_ && : $i || : $_
+    done
+    printf '%s' $_
+)
+
+##PURE_DOC##
 ##PURE_HEADER:get_sign
 #get_sign:
 # Return true if the given number is positive or 1

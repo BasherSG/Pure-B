@@ -22,11 +22,11 @@ echo() (
     if [[ -z "${REGEX[*]}" ]]; then
         builtin echo $_ -e "${COLOR[MAIN]}$*${NC}"
     else
-        local buff="$*" RGX last
+        local buff="$*" RGX
         for RGX in "${!REGEX[@]}"; do 
             [[ "$buff" =~ $RGX ]] && buff="${buff//${BASH_REMATCH[0]}/${COLOR[$RGX]}${BASH_REMATCH[0]}${NC}}"
         done
-        builtin echo $_ -e "$buff${NC}"
+        builtin echo -e "$buff"
     fi
 )
 

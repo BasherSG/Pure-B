@@ -8,10 +8,11 @@ test ${BASH_VERSINFO[0]} -ge 4 || { echo "Your Bash version is too old, required
 declare -rgA SIGTBL=( ['CTRL_WTCH']=SIGTSTP ['DEAM_HUP']=SIGHUP ['TRCE_EXIT']=EXIT )
 test -n "$CWD" || declare -g CWD="$( cd -P "$([[ -d "${0%/*}" ]] && echo "${0%/*}" || pwd)" && pwd )"
 
-declare -rg PURE_VERSION='1.4.2'
+declare -rg PURE_VERSION='1.4.3'
 declare -rg PURE_VERSINFO=( ${PURE_VERSION//\./ } 'beta' )
 
 declare -rg SELF_HEADER="${LWD}/${BASH_SOURCE[0]##*/}"
+declare -rg VERSION_FILE="${LWD}/.version.info"
 declare -rg SELF="${0##*/}"
 declare -rg SELFNAME="${SELF%.*}"
 declare -g DEF_PACK="${DEF_PACK:-core}"

@@ -17,7 +17,9 @@ declare -ga ARRAY=()
 # @warn: ¡DOESN'T WORK FOR BINARY FILES!
 ##PURE_DOC_END##
 fake_cat() (
-    [[ -r "${1}" ]] && echo "$(<${1})" && return 0
+    [[ -n "${*}" ]] && for i in "${@}"; do
+        [[ -r "${i}" ]] && echo "$(<"${i}")"
+    done && return 0
     while IFS='' read -r line; do echo "${line}" ; done
 )
 

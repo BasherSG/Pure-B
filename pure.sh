@@ -9,6 +9,27 @@ declare -rg SELF_PURE="${LWD}/${BASH_SOURCE[0]##*/}"
 
 source "${LWD}/pure_header.sh" || exit 255
 
+version_control() {
+    local cur_version=$(<"${VERSION_FILE}")
+    local cur_versinfo=( ${cur_version//\./ } )
+    declare -g new_version=false
+
+    version_case() {
+        ( case ${1} in
+            0) builtin echo "Updating Pure..." ; return 1;;
+            [1-3]) builtin echo "Updating Pure from ${cur_version} to ${PURE_VERSION}" ; return 1;;
+        esac ) || { builtin echo "${PURE_VERSION}" > "${VERSION_FILE}" ; new_version=true ; }
+    }
+
+    if [[ "${cur_version}" != "${PURE_VERSION}" ]]; then
+        [[ ! -f "${VERSION_FILE}" ]] && { version_case 0; }
+        for ((i = 0 ; i < ${#cur_versinfo[@]} ; i++ )); do
+            ! ${new_version} && [[ "${cur_versinfo[$i]}" -lt "${PURE_VERSINFO[$i]}" ]] && { version_case $((++i)); }
+        done
+    fi
+    unset -f version_case
+}
+
 loaded_modules() (
     echo "Currently loaded modules: $LOADED"
 )
@@ -40,10 +61,12 @@ map_packages() {
 }
 
 map_modules() {
-    local namespace label pack
+    local namespace label pack mdl
     local IFS=\: k i j
     for k in ${PACK_FOLD}; do
-        for i in "${k}"/*; do
+        for i in "${k}"/*.sh; do
+            mdl="${i##*/}"
+            [[ "${mdl}" =~ ^[a-z0-9_]+\.sh$ ]] || continue
             pack="${k##*/}"
             namespace=""
             if $MDL_ALIASES; then
@@ -61,7 +84,7 @@ map_modules() {
                     fi
                 done
             fi
-            test -z "$namespace" && : "${i##*/}" && namespace="${pack}/${_%.*}" 
+            test -z "$namespace" && : "${mdl}" && namespace="${pack}/${_%.*}" 
             label="${namespace##*/}"
             if [[ $label =~ [a-z_0-9]+$ ]]; then
                 test -n "$namespace" || exit "${ERRTBL[MDL_FATAL]}"
@@ -93,8 +116,9 @@ eval_def_args() {
 }
 
 {
+    version_control
     [[ "$*" =~ ${DEF_ARGS[cache]} ]] && CACHE_FILE="${CWD}/.${SELFNAME}.cache"
-    if [[ -s "${CACHE_FILE}" ]] && [[ ! "$*" =~ ${DEF_ARGS[reload]} ]]; then
+    if [[ -s "${CACHE_FILE}" ]] && [[ ! "$*" =~ ${DEF_ARGS[reload]} ]] && ! ${new_version}; then
         source "${CACHE_FILE}"
     else
         map_packages
@@ -117,6 +141,6 @@ eval_def_args() {
     done
     set +f
     IFS="$OLDIFS"
-    unset OLDIFS pattern c pak i
+    unset OLDIFS pattern c pak i new_version
     eval_def_args "$@"
 }

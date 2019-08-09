@@ -25,11 +25,11 @@ lock() { (
             test -f "$PIDFILE" || fatal "$PIDFILE is not a regular file" ${ERRTBL[BAD_FILE]}
             test -r "$PIDFILE" || fatal "Can't read file $PIDFILE" ${ERRTBL[CANT_READ]}
             if [[ -s "$PIDFILE" ]] ; then
-                local pid="$(builtin echo $(<$PIDFILE))"
+                local pid="$(<$PIDFILE)"
                 if [[ -d /proc/$pid ]]; then
                     test -r /proc/$pid/comm || fatal "Can't establish which process is using the pid: $pid" ${ERRTBL[CANT_READ]}
-                    local process="$(builtin echo $(</proc/$pid/comm))"
-                    [[ "$SELF" == "$process" ]] && fatal "Process $SELF is already running" ${ERRTBL[LOCK_ON]}
+                    local process="$(</proc/$pid/comm)"
+                    [[ "$SELF" == "$process" ]] && fatal "Process $SELF is already running at PID: $pid" ${ERRTBL[LOCK_ON]}
                 fi
             fi
         fi

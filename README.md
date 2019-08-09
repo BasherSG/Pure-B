@@ -1,6 +1,6 @@
 <h1>Pure B</h1>
 
-<h3>Current Version: 1.4.2 beta</h3>
+<h3>Current Version: 1.4.3 beta</h3>
 
 <div id="contents">
 	<h2>Contents:</h2>
@@ -127,13 +127,14 @@
 			<li>color(Stable): String coloring functions</li>
 			<li>conf(Stable): Simple config file management</li>
 			<li>ctrl(Stable): Script external interruptions management, also like a way to tell scripts what to do.</li>
-			<li>daemon(Unstable): Process locking and daemonization</li>
+			<li>daemon(Stable): Process locking and daemonization</li>
 			<li>dir(Stable): File and folder test, list, and search functions</li>
 			<li>log(Stable): Transparent logging file management (printf output not loggable)</li>
 			<li>mssg(Stable): Easy colored message functions</li>
 			<li>opp(Stable): Mathematical and numerical testing functions</li>
 			<li>opts(Stable): Easy option parsing</li>
 			<li>proc(Stable): Process test, list, search functions</li>
+			<li>string(Stable): Miscellaneous utilities to transform, trim, cut, and find strings</li>
 			<li>trace(Stable): Tracing of function calls and last function called</li>
 			<li>tty(Stable): Active ttys and current tty begin used functions</li>
 			<li>util(Stable): Common use functions</li>
@@ -157,7 +158,7 @@
 	<ul>
 		<li>debugger(Brocken):  Debugger intended to be like gdb with it's basic functionalities</li>
 		<li>manual(In-Progress): Interactive manual.</li>
-		<li>shcpacker(Working-Beta): Intended to be used with shc (Shell script compiler), by packing all the used modules and their requirements into a single script</li>
+		<li>shcpacker(Stable): Intended to be used with shc (Shell script compiler), by packing all the used modules and their requirements into a single script</li>
 	</ul>
 </div>
 
@@ -165,7 +166,7 @@
 	<h2>Reserved Arguments:</h2>
 	<p>
 	Pure has some reserved arguments:
-	</p>
+	</p>s
 	<ul>
 		<li>--debug: Enable bash debugging functionality</li>
 		<li>--cache: Enable local <a href="#moduleCache">cache</a></li>
@@ -173,6 +174,7 @@
 		<li>--pak=&#706;package_name&#707;: Package to use on the subsequent module arguments</li>
 		<li>--&#706;module_name&#707;: Module argument to load before script</li>
 		<li>--mdl_alias: Enable module aliases</li>
+		<li>--: Long argument end</li>
 	</ul>
 <div>
 

@@ -101,7 +101,7 @@ ctrl() {
     reset_ctrl
 }
 
-watch() {
+watch_me() {
     local watcher="
     #!/usr/bin/env bash
 
@@ -128,8 +128,8 @@ watch() {
     "
     bash <(builtin echo "$watcher") & WATCHER=$!
     trap "ctrl" "${SIGTBL[CTRL_WTCH]}"
-    unset -f watch
+    unset -f watch_me
 }
 
 reset_ctrl
-watch
+watch_me

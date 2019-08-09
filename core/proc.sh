@@ -10,7 +10,7 @@ require "core/mssg"
 require "core/util"
 require "core/opp"
 
-declare -rig MAXPID="$(fake_cat /proc/sys/kernel/pid_max)"
+declare -rig MAXPID="$(</proc/sys/kernel/pid_max)"
 
 ##PURE_DOC##
 ##PURE_HEADER:get_proc_pids
@@ -48,6 +48,19 @@ get_all_pids() (
 proc_name() (
     local IFS=' '
     [[ -f "/proc/$1/comm" ]] && fake_cat "/proc/$1/comm"
+)
+
+##PURE_DOC##
+##PURE_HEADER:get_proc_names
+#get_proc_names:
+# Get all the names of every process
+# 
+# @usage get_proc_names
+##PURE_DOC_END##
+get_proc_names() (
+    : "$(get_proc_pids)"
+    : "/proc/${_//\ /\/comm\ \/proc/}"
+    fake_cat $_
 )
 
 ##PURE_DOC##
